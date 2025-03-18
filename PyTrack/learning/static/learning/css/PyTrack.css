@@ -1,0 +1,175 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+header h2 {
+    font-size: 2rem;
+    color: #7fdbff;
+    text-shadow: 0 0 8px #7fdbff, 0 0 12px #7fdbff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown button {
+    background-color: #292929;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.dropdown button:hover {
+    background-color: #474747;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #292929;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 10px 0;
+}
+
+.dropdown-content p {
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content p:hover {
+    background-color: #474747;
+    color: #7fdbff;
+}
+
+.dropdown.open .dropdown-content {
+    display: block;
+}
+
+#selected-language {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Основной блок страницы */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.registration-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 100%;
+}
+
+.registration-form h2 {
+    color: #7fdbff;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #7fdbff;
+}
+
+.registration-form label {
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.registration-form input {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.registration-form input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px #7fdbff;
+}
+
+.registration-form button {
+    background: linear-gradient(45deg, #7fdbff, #0077ff);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.registration-form button:hover {
+    background: linear-gradient(45deg, #00c6ff, #0077ff);
+    box-shadow: 0 4px 20px rgba(0, 128, 255, 0.5);
+}
+
+.alert {
+    background: #1a73e8;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 8px #7fdbff;
+}
+
+@media (max-width: 768px) {
+    header h2 {
+        font-size: 1.5rem;
+    }
+
+    .registration-form {
+        padding: 20px;
+    }
+
+    .dropdown button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    #selected-language {
+        font-size: 1rem;
+    }
+}

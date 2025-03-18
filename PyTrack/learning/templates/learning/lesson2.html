@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2: Переменные и типы данных</title>
+    <link rel="stylesheet" href="{% static 'learning/css/lesson2.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h2>Урок 2: Переменные и типы данных</h2>
+        </div>
+    </header>
+
+    <main>
+        <div class="theory-content">
+            <h1>Урок 2: Переменные и типы данных</h1>
+            <section class="theory-text">
+                <h2>Теория:</h2>
+                <p>В Python переменные используются для хранения данных.</p>
+                <h3>Примеры типов данных:</h3>
+                <ul>
+                    <li><pre><code>Число = 10   #int(целое число)</code></pre></li>
+                    <li><pre><code>Дробь = 3.14   #float(дробное число)</code></pre></li>
+                    <li><pre><code>Текст = "Python"   #str(строка)</code></pre></li>
+                    <li><pre><code>Логическое значение = True   #bool(логическое значение)</code></pre></li>
+                </ul>
+            </section>
+            <div class="button-container">
+                <a href="{% url 'practice1' %}" class="button-link">
+                    <button class="button">Перейти к практическому заданию</button>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

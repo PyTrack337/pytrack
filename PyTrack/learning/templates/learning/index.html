@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> PyTrack </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'learning/css/PyTrack.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.querySelector('.dropdown');
+                dropdown.classList.toggle('open');
+            }
+    
+            function selectLanguage(language) {
+                document.getElementById('selected-language').innerText = `Выбранный язык: ${language}`;
+                document.querySelector('.dropdown').classList.remove('open');
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const registrationForm = document.getElementById('registrationForm');
+                registrationForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+            
+                    const username = document.getElementById('username').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+            
+                    if (username && email && password) {
+                        document.getElementById('successMessage').classList.remove('d-none');
+                        setTimeout(() => {
+                            window.location.href = "/main/";
+                        }, 1000);
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="navbar">
+                <div class = "row">
+                    <div class="col-sm-3">
+                        <h2>PyTrack</h2>
+                    </div>
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-3"><div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="dropdown">
+                            <button onclick="toggleDropdown()">Выберите язык</button>
+                            <div class="dropdown-content">
+                                <p onclick="selectLanguage('Русский')">Русский</p>
+                                <p onclick="selectLanguage('Английский')">Английский</p>
+                            </div>
+                        </div>
+                        <div id="selected-language" class="selected-language">Выбранный язык: </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <main class="mt-4">
+                <section id="register">
+                    <div class="registration-form">
+                        <h2 class="text-center">Регистрация</h2>
+                        <form id="registrationForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Имя пользователя</label>
+                                <input type="text" class="form-control" id="username" placeholder="Введите имя пользователя" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Электронная почта</label>
+                                <input type="email" class="form-control" id="email" placeholder="Введите email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="password" placeholder="Введите пароль" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                        </form>
+                        <div id="successMessage" class="alert alert-success mt-3 d-none text-center">
+                            Регистрация успешна!
+                        </div>
+                    </div>
+                </section>        
+            </main>
+        </main>
+    </body>
+</html>

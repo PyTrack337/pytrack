@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyTrack - Изучение Python</title>
+    <link rel="stylesheet" href="{% static 'learning/css/main.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="#"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+                <li><a href="#"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Прогресс</a></li>
+                <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
+                <li><a href="#"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
+                <li><a href="{% url 'about' %}"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <aside class="lesson-menu">
+            <h2>Уроки</h2>
+            <button class="lesson-button active" data-lesson="lesson1">Урок 1</button>
+            <button class="lesson-button locked" data-practice="practice1" disabled>Задание 1</button>
+            <button class="lesson-button locked" data-lesson="lesson2" disabled>Урок 2</button>
+            <button class="lesson-button locked" data-lesson="lesson3" disabled>Урок 3</button>
+        </aside>
+
+        <section class="lesson-content">
+            <div class="lesson-title">Выберите урок</div>
+            <div class="lesson-box"></div>
+        </section>
+    </main>
+
+    <script src="{% static 'learning/js/script.js' %}"></script>
+</body>
+</html>
