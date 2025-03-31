@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | PyTrack</title>
+    <link rel="stylesheet" href="{% static 'learning/css/auth2.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="/"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+                <li><a href="{% url 'register' %}"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> Регистрация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <h2>Вход</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">Войти</button>
+            </form>
+            <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,149 @@
+/* Основные стили */
+body {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Навигационная панель */
+.navbar {
+    background: black;
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-links img {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.nav-links a:hover {
+    color: #1f6feb;
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff;
+}
+
+/* Основное содержимое */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    padding-top: 100px;
+}
+
+/* Блок авторизации */
+.auth-container {
+    background: #161b22;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 198, 255, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Заголовок */
+.auth-container h2 {
+    color: #58a6ff;
+    font-size: 26px;
+    margin-bottom: 20px;
+    margin-top: 100px;
+}
+
+/* Форма */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Поля ввода */
+.auth-container input {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-container input:focus {
+    border-color: #58a6ff;
+    outline: none;
+    box-shadow: 0 0 5px #00c6ff;
+}
+
+/* Кнопка */
+.auth-container button {
+    background: #1f6feb;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    font-weight: bold;
+}
+
+.auth-container button:hover {
+    background: #58a6ff;
+}
+
+.auth-container button:active {
+    transform: scale(0.98);
+}
+
+/* Текст под формой */
+.auth-container p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.auth-container a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+.auth-container a:hover {
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff;
+}

@@ -35,6 +35,45 @@
         </section>
     </main>
 
-    <script src="{% static 'learning/js/script.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const lessonButtons = document.querySelectorAll(".lesson-button");
+            const lessonBox = document.querySelector(".lesson-box");
+            const lessonTitle = document.querySelector(".lesson-title");
+            
+            lessonButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    if (this.disabled) return;
+                    let lessonId = this.getAttribute("data-lesson") || this.getAttribute("data-practice");
+                    
+                    if (!lessonId) {
+                        console.error("Ошибка: lessonId не задан.");
+                        return;
+                    }
+                    
+                    fetch(`/lesson/${lessonId}/`)
+                        .then(response => response.text())
+                        .then(data => {
+                            lessonTitle.textContent = this.textContent;
+                            lessonBox.innerHTML = data;
+                            unlockNextLesson(this);
+                        })
+                        .catch(error => console.error("Ошибка загрузки урока:", error));
+                });
+            });
+            
+            function unlockNextLesson(currentButton) {
+                const buttonsArray = Array.from(lessonButtons);
+                const currentIndex = buttonsArray.indexOf(currentButton);
+                
+                if (currentIndex !== -1 && currentIndex < buttonsArray.length - 1) {
+                    const nextButton = buttonsArray[currentIndex + 1];
+                    nextButton.disabled = false;
+                    nextButton.classList.remove("locked");
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
