@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyTrack - Изучение Python</title>
+    <link rel="stylesheet" href="{% static 'learning/css/profile.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="/main/"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+                <li><a href="#"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Прогресс</a></li>
+                <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
+                <li><a href="#"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
+                <li><a href="{% url 'about' %}"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="profile-container">
+      <div class="profile-header">
+        <h1>Добро пожаловать, {{ user.username }}!</h1>
+        <p>Профиль пользователя</p>
+      </div>
+  
+      <div class="profile-info">
+        {% if user.avatar %}
+          <img src="{{ user.avatar.url }}" alt="Аватар">
+        {% else %}
+          <img src="{% static 'images/default-avatar.png' %}" alt="Аватар">
+        {% endif %}
+        <div class="username">{{ user.first_name }} {{ user.last_name }}</div>
+        <div class="email">{{ user.email }}</div>
+      </div>
+  
+      <form method="POST" enctype="multipart/form-data" class="profile-form">
+        {% csrf_token %}
+        
+        <label for="first_name">Имя</label>
+        <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+        
+        <label for="last_name">Фамилия</label>
+        <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+  
+        <label for="email">Электронная почта</label>
+        <input type="email" name="email" id="email" value="{{ user.email }}">
+        
+        <label for="avatar">Изменить аватар</label>
+        <input type="file" name="avatar" id="avatar">
+  
+        <button type="submit">Сохранить изменения</button>
+      </form>
+    </div>
+</body>
+</html>

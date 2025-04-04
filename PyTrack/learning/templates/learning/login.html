@@ -20,11 +20,30 @@
     <main>
         <div class="auth-container">
             <h2>Вход</h2>
+
+            {% if form.errors %}
+                <div class="error-messages">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <label for="{{ form.username.id_for_label }}">Имя пользователя:</label>
+                {{ form.username }}
+
+                <label for="{{ form.password.id_for_label }}">Пароль:</label>
+                {{ form.password }}
+
                 <button type="submit" class="btn">Войти</button>
             </form>
+
             <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
         </div>
     </main>

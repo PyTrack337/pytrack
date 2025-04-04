@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class Course(models.Model):
     name = models.CharField(max_length=200)
@@ -28,9 +28,24 @@ class Exercise(models.Model):
         return f"Упражнение {self.lesson.title}"
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class CustomUser(AbstractUser):
     is_premium = models.BooleanField(default=False)
-
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    
     def __str__(self):
-        return f"{self.user.username} (Premium: {self.is_premium})"
+        return self.username
+
+    groups = models.ManyToManyField(
+        "auth.Group",
+        related_name="customuser_set",
+        blank=True,
+        help_text="The groups this user belongs to."
+    )
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        related_name="customuser_set",
+        blank=True,
+        help_text="Specific permissions for this user."
+    )

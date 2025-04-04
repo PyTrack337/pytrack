@@ -18,6 +18,7 @@ urlpatterns = [
     path('', register, name='register'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
 ]
 
 handler404 = custom_404

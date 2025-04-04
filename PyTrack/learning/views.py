@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import *
+from .models import *
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'learning/index.html', {})
@@ -48,13 +51,15 @@ def error404(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.is_premium = form.cleaned_data['is_premium']
+            user.save()
             login(request, user)
-            return redirect('main')  # Перенаправляем на главную страницу
+            return redirect('main')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'learning/register.html', {'form': form})
 
 def user_login(request):
@@ -71,3 +76,18 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+
+@login_required
+def profile(request):
+    user = request.user
+    
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=user)
+        
+    return render(request, 'learning/profile.html', {'form': form})
