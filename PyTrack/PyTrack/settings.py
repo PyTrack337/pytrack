@@ -10,7 +10,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'doflzshys',
+    'API_KEY': '112272295762214',
+    'API_SECRET': 'QCY1deW2ZJL-RWkZjqaTl5CSl30',
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'learning',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
