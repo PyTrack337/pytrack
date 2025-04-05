@@ -1,4 +1,4 @@
-
+import os
 
 from pathlib import Path
 
@@ -96,7 +96,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
