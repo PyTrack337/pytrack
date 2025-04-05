@@ -1,1 +1,1 @@
-web: gunicorn PyTrack.wsgi
+web: gunicorn PyTrack.PyTrack.wsgi
