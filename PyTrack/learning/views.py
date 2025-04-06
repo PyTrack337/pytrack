@@ -91,3 +91,6 @@ def profile(request):
         form = ProfileForm(instance=user)
         
     return render(request, 'learning/profile.html', {'form': form})
+
+def support(request):
+    return render(request, 'learning/support.html')

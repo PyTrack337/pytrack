@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyTrack - Изучение Python</title>
+    <link rel="stylesheet" href="{% static 'learning/css/support.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="/main/"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+                <li><a href="#"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Помощь</a></li>
+                <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
+                <li><a href="/profile/"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
+                <li><a href="{% url 'about' %}"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="support-container">
+        <h2>Связаться с техподдержкой</h2>
+        <p>Если у вас возникли проблемы, вы можете связаться с нашей службой поддержки:</p>
+    
+        <ul class="support-list">
+            <li><strong>Email:</strong> al3fil4@gmail.com</li>
+            <li><strong>Telegram:</strong> <a href="https://web.telegram.org/k/#@whoreisyourname" target="_blank">@whoreisyourname</a></li>
+            <li><strong>Рабочее время:</strong> Пн–Пт, с 9:00 до 18:00</li>
+        </ul>
+    </div>
+</body>
+</html>

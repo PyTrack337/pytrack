@@ -4,7 +4,6 @@ from django.shortcuts import render
 from .views import custom_404, register, user_login, user_logout
 
 urlpatterns = [
-    #path('', views.index, name='index'),
     path('main/', views.main_page, name='main'),
     path("sub/", lambda request: render(request, 'learning/sub.html'), name='sub'),
     path('about/', views.about_page, name='about'),
@@ -19,6 +18,7 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('profile/', views.profile, name='profile'),
+    path('support/', views.support, name='support'),
 ]
 
 handler404 = custom_404
