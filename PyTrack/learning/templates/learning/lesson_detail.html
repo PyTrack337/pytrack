@@ -1,0 +1,85 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lesson.title }}</title>
+    <link rel="stylesheet" href="{% static 'learning/css/lesson.css' %}">
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="/main/"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+            <li><a href="/support/"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Помощь</a></li>
+            <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
+            <li><a href="/profile/"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
+            <li><a href="/about/"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="lesson-layout">
+        <aside class="lesson-sidebar">
+            <h3>Уроки</h3>
+            <ul>
+                {% for l in lessons %}
+                    <li>
+                        <form action="{% url 'lesson_detail' l.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="button" type="submit">{{ l.order }}. {{ l.title }}</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <div class="theory-content">
+            <h1>{{ lesson.title }}</h1>
+            <section class="theory-text">
+                <h2>Теория:</h2>
+                <p>{{ lesson.theory|linebreaks }}</p>
+
+                {% if lesson.example_code %}
+                    <h3>Пример кода:</h3>
+                    <pre><code>{{ lesson.example_code }}</code></pre>
+                {% endif %}
+
+                {% if lesson.exercises.all %}
+                    <h2>Упражнения:</h2>
+                    {% for exercise in lesson.exercises.all %}
+                        <div class="exercise-block">
+                            <form method="post">
+                                {% csrf_token %}
+                                <p>{{ exercise.question|linebreaks }}</p>
+                                <input type="text" name="answer" placeholder="Введите ответ"><br><br>
+
+                                <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
+
+                                {% if exercise_completion_status|get_item:exercise.id %}
+                                    <p style="color: #19bf40;">✅ Упражнение пройдено!</p>
+                                {% else %}
+                                    <button type="submit" class="button">Проверить</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if next_lesson and all_exercises_completed %}
+                    <div class="button-container">
+                        <a class="button-link" href="{% url 'lesson_detail' next_lesson.id %}">
+                            <button class="button">Следующий урок: {{ next_lesson.title }}</button>
+                        </a>
+                    </div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

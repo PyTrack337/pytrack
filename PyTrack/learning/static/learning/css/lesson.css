@@ -1,30 +1,58 @@
 body {
+    background-color: #0d1117;
+    color: #c9d1d9;
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
-    color: #ffffff;
     margin: 0;
     padding: 0;
-}
-
-header {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 10px 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
-}
-
-header h2 {
-    font-size: 2rem;
-    color: #7fdbff;
-    text-shadow: 0 0 8px #7fdbff, 0 0 12px #7fdbff;
-    text-align: center;
-}
-
-.main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.navbar {
+    background: black;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    min-height: 80vh;
-    padding: 20px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.nav-links img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #1f6feb;
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff, 0 0 30px #00c6ff;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+    margin: 20px;
 }
 
 .theory-content {
@@ -34,7 +62,11 @@ header h2 {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     max-width: 1200px;
-    width: 100%;
+    width: 200px;
+    padding: 20px;
+    background: #161b22;
+    border-radius: 10px;
+    
 }
 
 .theory-content h1 {
@@ -127,4 +159,55 @@ header h2 {
     .theory-text pre {
         font-size: 1rem;
     }
+}
+
+.lesson-layout {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.lesson-sidebar {
+    flex: 1;
+    max-width: 200px;
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.lesson-sidebar h3 {
+    text-align: center;
+    color: #58a6ff;
+    margin-bottom: 15px;
+}
+
+.lesson-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lesson-sidebar li {
+    margin: 10px 0;
+}
+
+.lesson-sidebar a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.lesson-sidebar a:hover {
+    color: #1f6feb;
+    text-shadow: 0 0 10px #00c6ff;
+}
+
+.theory-content {
+    flex: 3;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
 }

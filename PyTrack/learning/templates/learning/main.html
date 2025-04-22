@@ -8,74 +8,51 @@
     <link rel="stylesheet" href="{% static 'learning/css/main.css' %}">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <ul class="nav-links">
-                <li><a href="#"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
-                <li><a href="/support/"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Помощь</a></li>
-                <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
-                <li><a href="/profile/"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
-                <li><a href="{% url 'about' %}"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#"><img src="{% static 'learning/images/snake_calm.png' %}" alt="🐍"> Главная</a></li>
+            <li><a href="/support/"><img src="{% static 'learning/images/snake_party.png' %}" alt="🐍"> Помощь</a></li>
+            <li><a href="/sub/"><img src="{% static 'learning/images/snake_dead.png' %}" alt="🐍"> Подписка</a></li>
+            <li><a href="/profile/"><img src="{% static 'learning/images/snake_passion.png' %}" alt="🐍"> Профиль</a></li>
+            <li><a href="/about/"><img src="{% static 'learning/images/snake_happy.png' %}" alt="🐍"> О нас</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <main>
-        <aside class="lesson-menu">
-            <h2>Уроки</h2>
-            <button class="lesson-button active" data-lesson="lesson1">Урок 1</button>
-            <button class="lesson-button locked" data-practice="practice1" disabled>Задание 1</button>
-            <button class="lesson-button locked" data-practice="practice2" disabled>Задание 2</button>
-            <button class="lesson-button locked" data-practice="practice3" disabled>Задание 3</button>
-            <button class="lesson-button locked" data-lesson="lesson2" disabled>Урок 2</button>
-            <button class="lesson-button locked" data-lesson="lesson3" disabled>Урок 3</button>
-        </aside>
-
-        <section class="lesson-content">
-            <div class="lesson-title">Выберите урок</div>
-            <div class="lesson-box"></div>
-        </section>
-    </main>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const lessonButtons = document.querySelectorAll(".lesson-button");
-            const lessonBox = document.querySelector(".lesson-box");
-            const lessonTitle = document.querySelector(".lesson-title");
+<main>
+    <aside class="lesson-menu">
+        <h2>Уроки</h2>
+            {% for lesson in lessons %}
+            <form method="post" action="{% url 'lesson_detail' lesson.id %}">
+                {% csrf_token %}
+                <button type="submit" class="lesson-button">
+                    {{ lesson.title }}
+                </button>
+            </form>
             
-            lessonButtons.forEach(button => {
-                button.addEventListener("click", function () {
-                    if (this.disabled) return;
-                    let lessonId = this.getAttribute("data-lesson") || this.getAttribute("data-practice");
-                    
-                    if (!lessonId) {
-                        console.error("Ошибка: lessonId не задан.");
-                        return;
-                    }
-                    
-                    fetch(`/lesson/${lessonId}/`)
-                        .then(response => response.text())
-                        .then(data => {
-                            lessonTitle.textContent = this.textContent;
-                            lessonBox.innerHTML = data;
-                            unlockNextLesson(this);
-                        })
-                        .catch(error => console.error("Ошибка загрузки урока:", error));
-                });
-            });
-            
-            function unlockNextLesson(currentButton) {
-                const buttonsArray = Array.from(lessonButtons);
-                const currentIndex = buttonsArray.indexOf(currentButton);
-                
-                if (currentIndex !== -1 && currentIndex < buttonsArray.length - 1) {
-                    const nextButton = buttonsArray[currentIndex + 1];
-                    nextButton.disabled = false;
-                    nextButton.classList.remove("locked");
-                }
-            }
-        });
-    </script>
+            {% empty %}
+                <p>Нет доступных уроков</p>
+            {% endfor %}
+        <ul>
+            {% for lesson in lessons %}
+                <li>{{ lesson.title }} - {% if lesson.unlocked %}открыт{% else %}закрыт{% endif %}</li>
+            {% empty %}
+                <li>Нет уроков.</li>
+            {% endfor %}
+        </ul>
+    </aside>
 
+    <section class="lesson-content">
+        <div class="lesson-title">
+            {% if selected_lesson %}{{ selected_lesson.title }}{% else %}Выберите урок{% endif %}
+        </div>
+        <div class="lesson-box">
+            {% if selected_lesson %}
+                {{ selected_lesson.content|safe }}
+            {% endif %}
+        </div>
+    </section>
+</main>
 </body>
 </html>

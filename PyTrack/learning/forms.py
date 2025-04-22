@@ -14,6 +14,6 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'avatar']  # Поля, которые можно редактировать
+        fields = ['first_name', 'last_name', 'avatar'] 
 
     avatar = forms.ImageField(required=False)
