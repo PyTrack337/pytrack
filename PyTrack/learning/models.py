@@ -38,6 +38,7 @@ class Exercise(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='exercises')
     question = models.TextField()
     correct_answer = models.CharField(max_length=255)
+    answer = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -46,7 +47,7 @@ class Exercise(models.Model):
 class ExerciseProgress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    is_completed = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'exercise')

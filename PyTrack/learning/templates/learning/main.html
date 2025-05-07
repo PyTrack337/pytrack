@@ -23,24 +23,20 @@
 <main>
     <aside class="lesson-menu">
         <h2>Уроки</h2>
-            {% for lesson in lessons %}
+        {% for lesson in lessons %}
             <form method="post" action="{% url 'lesson_detail' lesson.id %}">
                 {% csrf_token %}
-                <button type="submit" class="lesson-button">
+                <button 
+                    type="submit" 
+                    class="lesson-button" 
+                    {% if not lesson.is_unlocked %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
+                >
                     {{ lesson.title }}
                 </button>
             </form>
-            
-            {% empty %}
-                <p>Нет доступных уроков</p>
-            {% endfor %}
-        <ul>
-            {% for lesson in lessons %}
-                <li>{{ lesson.title }} - {% if lesson.unlocked %}открыт{% else %}закрыт{% endif %}</li>
-            {% empty %}
-                <li>Нет уроков.</li>
-            {% endfor %}
-        </ul>
+        {% empty %}
+            <p>Нет доступных уроков</p>
+        {% endfor %}
     </aside>
 
     <section class="lesson-content">

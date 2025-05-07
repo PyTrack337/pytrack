@@ -1,125 +1,115 @@
+/* Основные стили страницы */
 body {
+    background-color: #0d1117;
+    color: #c9d1d9;
     font-family: 'Arial', sans-serif;
-    margin: 0;
     padding: 0;
-    height: 100vh;
-    background: #000000;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    overflow-x: hidden;
     position: relative;
-    flex-direction: column;
 }
 
+/* Параллакс-эффект для фона */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{% static "learning/images/background.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+    animation: parallax 20s infinite linear;
+}
+
+@keyframes parallax {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(50%); }
+}
+
+/* Стиль заголовка */
 h1 {
-    font-size: 4rem;
-    color: #ffffff;
-    text-align: center;
+    color: #7fdbff;
+    font-size: 3rem;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff, 0 0 30px #00c6ff;
-    animation: textAnimation 4s infinite alternate;
-    position: relative;
-    z-index: 2;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    animation: glow 1.5s ease-in-out infinite alternate;
 }
 
+@keyframes glow {
+    0% { text-shadow: 0 0 20px #58a6ff, 0 0 30px #58a6ff, 0 0 40px #00c6ff; }
+    100% { text-shadow: 0 0 30px #00c6ff, 0 0 40px #58a6ff, 0 0 50px #7fdbff; }
+}
+
+/* Контейнер эмоджи */
 .emoji-container {
-    margin-top: 20px;
-    text-align: center;
+    margin-bottom: 30px;
+    animation: float 2s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
 }
 
 .emoji {
-    font-size: 3rem;
-    animation: emojiAnimation 2s infinite alternate;
+    font-size: 64px;
+    color: #58a6ff;
 }
 
-@keyframes textAnimation {
-    0% {
-        color: #ffffff;
-        text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff, 0 0 30px #00c6ff;
-    }
-    50% {
-        color: #7fdbff;
-        text-shadow: 0 0 20px #7fdbff, 0 0 40px #7fdbff, 0 0 60px #7fdbff;
-    }
-    100% {
-        color: #00ffcc;
-        text-shadow: 0 0 30px #00ffcc, 0 0 60px #00ffcc, 0 0 90px #00ffcc;
-    }
+/* Стиль списка */
+.lead {
+    font-size: 1.2rem;
+    color: #c9d1d9;
+    margin-bottom: 20px;
 }
 
-@keyframes emojiAnimation {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.2); /* Увеличиваем размер смайлика при анимации */
-    }
+.list-group {
+    background-color: #161b22;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes sphereAnimation {
-    0% {
-        transform: rotate(0deg);
-        background: radial-gradient(circle, #00c6ff, #000000);
-    }
-    50% {
-        transform: rotate(360deg);
-        background: radial-gradient(circle, #00ffcc, #000000);
-    }
-    100% {
-        transform: rotate(720deg);
-        background: radial-gradient(circle, #7fdbff, #000000);
-    }
+/* Эффекты на пунктах списка */
+.list-group-item {
+    background-color: transparent;
+    color: #c9d1d9;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0%;
-    left: 26.5%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, #00c6ff, #000000, fixed);
-    border-radius: 50%;
-    animation: sphereAnimation 10s infinite;
+.list-group-item:hover {
+    background-color: #2d333b;
+    transform: scale(1.05);
+}
+
+/* Анимация перехода к кнопке или ссылке */
+.mt-4 {
+    margin-top: 40px;
+    position: relative;
     z-index: 1;
-    transform: translate(-50%, -50%);
-    opacity: 0.8;
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 700px;
-    height: 700px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-    animation: pulseAnimation 5s infinite ease-in-out;
-    transform: translate(-50%, -50%);
-    z-index: 0;
+a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s, transform 0.3s;
+    font-size: 1.1rem;
 }
 
-@keyframes pulseAnimation {
-    0% {
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 0.6;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 0.6;
-    }
-}
-
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
-    }
+a:hover {
+    color: #1f6feb;
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff, 0 0 30px #00c6ff;
+    transform: scale(1.1);
 }
