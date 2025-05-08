@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -29,7 +30,7 @@
                 <button 
                     type="submit" 
                     class="lesson-button" 
-                    {% if not lesson.is_unlocked %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
+                    {% if not lesson_progress_dict|get_item:lesson.id %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
                 >
                     {{ lesson.title }}
                 </button>
@@ -38,6 +39,9 @@
             <p>Нет доступных уроков</p>
         {% endfor %}
     </aside>
+    
+    
+    
 
     <section class="lesson-content">
         <div class="lesson-title">

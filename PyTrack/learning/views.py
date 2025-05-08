@@ -42,69 +42,71 @@ def main_view(request):
 @csrf_exempt
 def lesson_detail(request, lesson_id): 
     user = request.user
-    lessons = Lesson.objects.order_by('order')
+    all_lessons = Lesson.objects.order_by('order')
+    progresses = LessonProgress.objects.filter(user=user)
+    lesson_progress_dict = {p.lesson_id: p.unlocked for p in progresses}
+
+    lessons = []
+    for lesson in all_lessons:
+        lesson.unlocked = lesson_progress_dict.get(lesson.id, False)
+        lessons.append(lesson)
+        
     selected_lesson = get_object_or_404(Lesson, pk=lesson_id)
 
     # Проверка доступа к уроку
-    lesson_progress = LessonProgress.objects.filter(user=request.user, lesson=selected_lesson).first()
+    lesson_progress = LessonProgress.objects.filter(user=user, lesson=selected_lesson).first()
     if lesson_progress and not lesson_progress.unlocked:
         return render(request, 'learning/404.html') 
-        
 
-    # Получаем все упражнения урока
+    # Получаем упражнения урока
     exercises = Exercise.objects.filter(lesson=selected_lesson).order_by('order')
-    exercise_completed = False
+    incorrect_answers = {}
 
     if request.method == "POST":
         exercise_id = request.POST.get("exercise_id")
-
         if exercise_id:
             answer = request.POST.get(f"answer_{exercise_id}", "").strip()
-
-            # Найти упражнение, связанное с уроком
             exercise = get_object_or_404(Exercise, id=exercise_id)
             correct_answer = exercise.answer.strip()
 
-            if answer == correct_answer:
+            if answer.lower() == correct_answer.lower():  # нечувствительно к регистру
                 ExerciseProgress.objects.update_or_create(
                     user=user,
                     exercise=exercise,
                     defaults={"completed": True}
                 )
-    
-                # Проверка: все упражнения выполнены?
-                all_completed = all(
-                    ExerciseProgress.objects.filter(user=user, exercise=ex, completed=True).exists()
-                    for ex in exercises
-                )
-                exercise_completed = all_completed
+            else:
+                print(f"User Answer: {answer}, Correct Answer: {correct_answer}")  # Добавьте это для отладки
+                incorrect_answers[int(exercise_id)] = True
 
-                if all_completed:
-                    # Разблокировать следующий урок
-                    current_index = list(lessons).index(selected_lesson)
-                    if current_index + 1 < len(lessons):
-                        next_lesson = lessons[current_index + 1]
-                        LessonProgress.objects.update_or_create(
-                            user=user,
-                            lesson=next_lesson,
-                            defaults={"unlocked": True}
-                        )
-
-        else:
-            # Безопасная обработка случая, если не передан exercise_id
-            print("Ошибка: не передан ID упражнения")
-
-    # Проверка, пройдены ли все упражнения текущего урока
+    # Проверка завершенности всех упражнений
     all_completed = all(
-    ExerciseProgress.objects.filter(user=user, exercise=ex, completed=True).exists()
-    for ex in exercises
-)
+        ExerciseProgress.objects.filter(user=user, exercise=ex, completed=True).exists()
+        for ex in exercises
+    )
 
-    next_lesson = lessons.filter(order__gt=selected_lesson.order).first()
+    # Разблокировать следующий урок
+    next_lesson = None 
+    if all_completed:
+        current_index = list(lessons).index(selected_lesson)
+        if current_index + 1 < len(lessons):
+            next_lesson = lessons[current_index + 1]
+            LessonProgress.objects.update_or_create(
+                user=user,
+                lesson=next_lesson,
+                defaults={"unlocked": True}
+            )
+    else:
+        next_lesson = None
+        for l in lessons:
+            if l.order > selected_lesson.order:
+                next_lesson = l
+                break
 
+    # Статус выполнения по каждому упражнению
     exercise_completion_status = {
-    ex.id: ExerciseProgress.objects.filter(user=user, exercise=ex, completed=True).exists()
-    for ex in exercises
+        ex.id: ExerciseProgress.objects.filter(user=user, exercise=ex, completed=True).exists()
+        for ex in exercises
     }
 
     return render(request, 'learning/lesson_detail.html', {
@@ -113,6 +115,8 @@ def lesson_detail(request, lesson_id):
         'next_lesson': next_lesson,
         'exercise_completed': all_completed,
         'exercise_completion_status': exercise_completion_status,
+        'lesson_progress_dict': lesson_progress_dict,
+        'incorrect_answers': incorrect_answers,
     })
 
 

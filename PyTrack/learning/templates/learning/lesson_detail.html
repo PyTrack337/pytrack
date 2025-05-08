@@ -49,25 +49,29 @@
                 {% endif %}
 
                 {% if lesson.exercises.all %}
-                    <h2>Упражнения:</h2>
-                    {% for exercise in lesson.exercises.all %}
-                        <div class="exercise-block">
-                            <form method="post">
-                                {% csrf_token %}
-                                <p>{{ exercise.question|linebreaks }}</p>
-                                <input type="text" name="answer" placeholder="Введите ответ"><br><br>
+                <h2>Упражнения:</h2>
+                {% for exercise in lesson.exercises.all %}
+                    <div class="exercise-block">
+                        <form method="post">
+                            {% csrf_token %}
+                            <p>{{ exercise.question|linebreaks }}</p>
+                            <input type="text" name="answer_{{ exercise.id }}" placeholder="Введите ответ"><br><br>
 
-                                <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
+                            <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
 
-                                {% if exercise_completion_status|get_item:exercise.id %}
-                                    <p style="color: #19bf40;">✅ Упражнение пройдено!</p>
-                                {% else %}
-                                    <button type="submit" class="button">Проверить</button>
+                            {% if exercise_completion_status|get_item:exercise.id %}
+                                <p style="color: #19bf40;">✅ Упражнение пройдено!</p>
+                            {% else %}
+                                <button type="submit" class="button">Проверить</button>
+                                {% if incorrect_answers|get_item:exercise.id %}
+                                    <p style="color: red;">❌ Неправильный ответ, попробуйте ещё раз.</p>
                                 {% endif %}
-                            </form>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                            {% endif %}
+                        </form>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
 
                 {% if next_lesson and all_exercises_completed %}
                     <div class="button-container">
